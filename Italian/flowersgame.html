@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Flower's Game</title>
+  <link rel="stylesheet" href="css.css">
+</head>
+<body style="background-color:limegreen;">
+    <h2>Benvenuti al Flower's Game</h2>
+    <div class="button-container">
+      <button class="game-button" onclick="showScreen(1)">GIOCO 1</button>
+      <button class="game-button" onclick="showScreen(2)">GIOCO 2</button>
+      <button class="game-button" onclick="showScreen(3)">GIOCO 3</button>
+      <button class="game-button" onclick="showScreen(4)">GIOCO 4</button>
+      <button class="game-button" onclick="showScreen(5)">GIOCO 5</button>
+      <button id="toggle-button" onclick="showButtons()">NASCONDI PULSANTI</button>
+    </div>
+
+    <script>
+      var hide = false;
+
+      function showButtons() {
+        const buttons = document.querySelectorAll('.game-button');
+        const toggleButton = document.getElementById('toggle-button');
+
+        // Mostra o nasconde i pulsanti
+        buttons.forEach(button => {
+          button.style.display = hide ? 'inline-block' : 'none';
+        });
+
+        // Cambia il testo del pulsante di controllo
+        toggleButton.textContent = hide ? 'NASCONDI PULSANTI' : 'MOSTRA PULSANTI';
+
+        // Inverti lo stato di "hide"
+        hide = !hide;
+      }
+
+      const flowers = [
+        { name: "Aglio", image: "database/aglio.jpg" },
+        { name: "Azalea", image: "database/azalea.jpg" },
+        { name: "Bucaneve", image: "database/bucaneve.jpeg" },
+        { name: "Ciclamino", image: "database/ciclamino.jpg" },
+        { name: "Ciliegio", image: "database/fiorediciliegio.jpg" },
+        { name: "Crisantemo", image: "database/crisantemo.jpg" },
+        { name: "Dalia", image: "database/dalia.jpeg" },
+        { name: "Dente di leone", image: "database/dentedileone.jpg" },
+        { name: "Erica", image: "database/erica.png" },
+        { name: "Fiordaliso", image: "database/fiordaliso.jpg"},
+        { name: "Garofano", image: "database/garofano.jpg" },
+        { name: "Geranio", image: "database/geranio.jpg" },
+        { name: "Gelsomino", image: "database/gelsomino.jpg" },
+        { name: "Gilio", image: "database/gilio.jpg" },
+        { name: "Girasole", image: "database/girasole.jpeg" },
+        { name: "Glicine", image: "database/glicine.jpg" },
+        { name: "Ipomea", image: "database/ipomea.jpg" },
+        { name: "Iris", image: "database/iris.jpg" },
+        { name: "Lavanda", image: "database/lavanda.jpg" },
+        { name: "Loto", image: "database/fiorediloto.png" },
+        { name: "Magnolia", image: "database/magnolia.jpg" },
+        { name: "Margherita", image: "database/margherita.jpg" },
+        { name: "Mimosa", image: "database/mimosa.jpeg" },
+        { name: "Narciso", image: "database/narciso.jpg" },
+        { name: "Orchidea", image: "database/orchidea.jpg" },
+        { name: "Ortensia", image: "database/ortensia.png" },
+        { name: "Papavero", image: "database/papavero.jpg" },
+        { name: "Peonia", image: "database/peonia.jpg" },
+        { name: "Primula", image: "database/primula.jpg" },
+        { name: "Rosa", image: "database/rosa.jpeg" },
+        { name: "Trifoglio", image: "database/trifoglio.jpg" },
+        { name: "Tulipano", image: "database/tulipano.png" },
+        { name: "Viola", image: "database/viola.jpeg" }
+      ];
+    </script>
+
+    <div id="screens">
+      <div id="presentazione">
+        <p id="flower-name-homepage" style="font-weight:bold; text-align:center; font-size:30px;"></p>
+        <img id="flower-image-homepage" class="flower-image-homepage" src="" alt="Immagine del fiore">
+      </div>
+
+      <script>
+        let currentIndex = 0;
+        const flowerImageHomePage = document.getElementById("flower-image-homepage");
+        const flowerNameHomePage = document.getElementById("flower-name-homepage");
+
+        function updateSlideshow() {
+          // Aggiorna immagine e nome del fiore
+          flowerImageHomePage.src = flowers[currentIndex].image;
+          flowerImageHomePage.alt = flowers[currentIndex].name;
+          flowerNameHomePage.textContent = flowers[currentIndex].name.toUpperCase();
+          // Passa al prossimo fiore, torna al primo se necessario
+          currentIndex = (currentIndex + 1) % flowers.length;
+        }
+
+        // Imposta un timer per alternare la classe "hidden"
+
+        const visibleDuration = 9000; // 8 secondi
+        const transitionDuration = 1000; // 1 secondo
+
+        let isHidden = false;
+
+        var contatore = 0;
+
+        // Funzione per gestire la visibilità dell'immagine
+        function toggleImage() {
+          if (contatore==0) {
+              flowerImageHomePage.classList.remove('hidden');
+              flowerNameHomePage.classList.remove('hidden');
+              contatore+=1;
+          }
+          else if (contatore==8) {
+              flowerImageHomePage.classList.add('hidden');
+              flowerNameHomePage.classList.add('hidden');
+              contatore+=1;
+          }
+          else if(contatore==9){
+              contatore=0;
+          }
+          else {
+            contatore+=1;
+          }
+        }
+
+        // Imposta un timer per alternare la classe "hidden"
+        setInterval(toggleImage, 1000);
+
+        // Imposta la prima immagine e avvia lo slideshow
+        updateSlideshow();
+        setInterval(updateSlideshow, 10000); // Cambia ogni 15 secondi
+      </script>
+
+      <div class="screen" id="screen-1">
+        <div class="game-container">
+          <h3>GIOCO 1 : DI CHE FIORE SI TRATTA?</h3>
+          <p>Viene mostrato un fiore a caso. La squadra deve indovinarlo entro 30 secondi!</p>
+          <div id="scompare1">
+            <p>La prima e l'ultima lettera del nome del fiore sono indicate sopra l'immagine.</p>
+            <p>Scrivete su un foglio il nome del fiore e mettete il nome della squadra.</p>
+            <p>Ogni squadra può discutere su quale fiore sia.</p>
+          </div>
+          <p>Per ogni fiore indovinato si prendono 5 punti. Il gioco si svolge in 6 round.</p>
+          <p id="flower-name" style="display:none; font-weight:bold;"></p>
+          <p id="temp-flower-name" style="display:block; font-weight:bold;"></p>
+          <text id="number_of_letters" style="display:block; font-weight:bold;"></text>
+          <img id="flower-image" class="flower-image" src="" alt="Immagine del fiore" style="display:none;">
+          <div class="timer" id="timer"></div>
+          <button id="start-button1" onclick="startRoundGame1()">Inizia Round 1</button>
+        </div>
+      </div>
+
+      <script>
+
+          var currentRound = 1;
+          let timerInterval;
+
+          // Funzione per rimuovere un fiore già scelto
+          function removeFlower(selectedFlower) {
+              const index = flowers.findIndex(flower => flower.name === selectedFlower.name);
+              if (index !== -1) {
+                  flowers.splice(index, 1);
+              }
+          }
+
+          function startRoundGame1() {
+              if (currentRound > 6) {
+                  alert("Il gioco è terminato! Grazie per aver giocato!");
+                  return;
+              }
+
+              const randomFlower = flowers[Math.floor(Math.random() * flowers.length)];
+              const flowerImage = document.getElementById("flower-image");
+              const flowerName = document.getElementById("flower-name");
+              const tempFlowerName = document.getElementById("temp-flower-name");
+              const timerElement = document.getElementById("timer");
+              const startButton = document.getElementById("start-button1");
+
+              const div_che_scompare1 = document.getElementById("scompare1");
+
+              const number_of_letters = document.getElementById("number_of_letters");
+
+              // Reset UI
+              flowerImage.src = randomFlower.image;
+              flowerImage.alt = randomFlower.name;
+              flowerImage.style.display = "block";
+              flowerName.style.display = "none";
+              div_che_scompare1.style.display = "none";
+              flowerName.textContent = randomFlower.name.toUpperCase(); // Converti il nome del fiore in maiuscolo
+              tempFlowerName.style.display = "block";
+              const randomFlowerName = randomFlower.name;
+              const firstLetter = randomFlowerName[0];
+              const lastLetter = randomFlowerName[randomFlowerName.length - 1];
+              const hyphens = " - ".repeat(randomFlowerName.length - 2);
+              number_of_letters.style.display = "block";
+              number_of_letters.style.fontSize = "14px";
+              number_of_letters.textContent = randomFlowerName.length+" lettere";
+              tempFlowerName.textContent = (firstLetter + hyphens + lastLetter).toUpperCase(); // Converti anche questo in maiuscolo
+              timerElement.textContent = "Tempo rimanente: 30 secondi";
+              startButton.disabled = true;
+
+              let timeLeft = 30;
+
+              // Start timer
+              timerInterval = setInterval(() => {
+                  timeLeft--;
+                  timerElement.textContent = `Tempo rimanente: ${timeLeft} secondi`;
+
+                  if (timeLeft <= 0) {
+                      clearInterval(timerInterval);
+                      flowerName.style.display = "block";
+                      tempFlowerName.style.display = "none";
+                      tempFlowerName.textContent = "";
+                      timerElement.textContent = "Tempo scaduto!";
+                      startButton.textContent = `Inizia Round ${currentRound + 1}`;
+                      startButton.disabled = false;
+                      number_of_letters.style.display="none";
+                      currentRound++;
+                      removeFlower(randomFlower); // Rimuovi il fiore scelto
+                      speak("Tempo scaduto!");
+                  }
+              }, 1000);
+          }
+        </script>
+
+
+        <div class="screen" id="screen-2">
+          <div class="game-container">
+            <h3>GIOCO 2 : DISEGNA IL FIORE</h3>
+            <p>Viene mostrato un fiore a caso per 30 secondi.</p>
+            <div id="scompare2">
+              <p>Dopo di che il fiore scompare ed ENTRAMBI i membri della squadra devono disegnare il fiore in 5 minuti.</p>
+              <p>Alla fine del tempo si valutano da tutti le opere d'arte create e si assegnano dei voti da 1 a 10.</p>
+            </div>
+            <p>La media dei punti da il punteggio finale della squadra.</p>
+            <p>Il gioco si svolge in 3 round.</p>
+            <p id="flower-name2" style="display:none; font-weight:bold; font-size:30px;"></p>
+            <img id="flower-image2" class="flower-image" src="" alt="Immagine del fiore" style="display:none;">
+            <div class="timer" id="timer2"></div>
+            <button id="start-button2" onclick="startRoundGame2()">Inizia Round 1</button>
+          </div>
+        </div>
+
+        <script>
+          /*const flowers = [
+              { name: "Rosa", image: "database/rosa.jpeg" },
+              { name: "Tulipano", image: "database/tulipano.png" },
+              { name: "Margherita", image: "database/margherita.jpg" },
+              { name: "Girasole", image: "database/girasole.jpeg" },
+              { name: "Orchidea", image: "database/orchidea.jpg" },
+              { name: "Gilio", image: "database/gilio.jpg" },
+              { name: "Viola", image: "database/viola.jpeg" },
+              { name: "Primula", image: "database/primula.jpg" },
+              { name: "Narciso", image: "database/narciso.jpg" },
+              { name: "Bucaneve", image: "database/bucaneve.jpeg" },
+              { name: "Garofano", image: "database/garofano.jpg" },
+              { name: "Ciclamino", image: "database/ciclamino.jpg" },
+              { name: "Lavanda", image: "database/lavanda.jpg" },
+              { name: "Dalia", image: "database/dalia.jpeg" }
+          ];*/
+
+          currentRound = 1;
+          let timerInterval2;
+          let timerPerFarSparireIlFiore;
+
+          // Funzione per rimuovere un fiore già scelto
+          /*function removeFlower(selectedFlower) {
+              const index = flowers.findIndex(flower => flower.name === selectedFlower.name);
+              if (index !== -1) {
+                  flowers.splice(index, 1);
+              }
+          }*/
+
+          function startRoundGame2() {
+              if (currentRound > 3) {
+                  alert("Il gioco è terminato! Grazie per aver giocato!");
+                  return;
+              }
+
+              const randomFlower2 = flowers[Math.floor(Math.random() * flowers.length)];
+              const flowerImage2 = document.getElementById("flower-image2");
+              const flowerName2 = document.getElementById("flower-name2");
+              const timerElement2 = document.getElementById("timer2");
+              const startButton2 = document.getElementById("start-button2");
+
+              const div_che_scompare2 = document.getElementById("scompare2");
+
+              // Reset UI
+              flowerImage2.src = randomFlower2.image;
+              flowerImage2.alt = randomFlower2.name;
+              flowerImage2.style.display = "block";
+              flowerName2.style.display = "block";
+              div_che_scompare2.style.display = "none";
+              flowerName2.textContent = randomFlower2.name.toUpperCase(); // Converti il nome del fiore in maiuscolo
+              startButton2.disabled = true;
+
+              let timeLeftPerFarSparireIlFiore = 30;
+              timerPerFarSparireIlFiore = setInterval(() => {
+                  timeLeftPerFarSparireIlFiore--;
+                  if (timeLeftPerFarSparireIlFiore <= 0) {
+                      clearInterval(timerPerFarSparireIlFiore);
+                      flowerImage2.style.display = "none";
+                  }
+              }, 1000);
+
+              let timeLeft2 = 300;
+
+              // Start timer
+              timerInterval2 = setInterval(() => {
+                  timeLeft2--;
+                  timerElement2.textContent = `Tempo rimanente: ${timeLeft2} secondi`;
+
+                  if (timeLeft2 <= 0) {
+                      clearInterval(timerInterval2);
+                      flowerName2.style.display = "none";
+                      timerElement2.textContent = "Tempo scaduto!";
+                      startButton2.textContent = `Inizia Round ${currentRound + 1}`;
+                      startButton2.disabled = false;
+                      currentRound++;
+                      removeFlower(randomFlower); // Rimuovi il fiore scelto
+                      speak("Tempo scaduto!");
+                  }
+              }, 1000);
+          }
+        </script>
+
+        <div class="screen" id="screen-3">
+          <div class="game-container">
+            <h3>GIOCO 3 : CATENA DI FIORI</h3>
+            <p>Ogni persona dice un fiore più i fiori che ha detto la persona precedente.</p>
+            <p>Esempio: </p>
+            <ol>
+              <p>La prima persona dice <i>"ciclamino"</i>;</p>
+              <p>la seconda dice <i>"ciclamino" + "papavero"</i>;</p>
+              <p>la terza dice <i>"ciclamino" + "papavero" + "girasole"</i>...</p>
+              <p>in questo modo si forma una catena.</p>
+            </ol>
+            <p>Tutte le persone della catena prendono tanti punti quanti sono i fiori nella catena.</p>
+            <p>Se in 7 persone dicono tutta la catena di fiori allora quelle persone prendono 7 punti ognuna.</p>
+            <p>Chi sbaglia spezza la catena e non prende punti.</p>
+            <p>Facciamo 3 giri fra i partecipanti. (se ne volete fare di più vediamo)</p>
+          </div>
+        </div>
+        <div class="screen" id="screen-4">
+          <div class="game-container">
+            <h3>GIOCO 4 : FIORISTA</h3>
+            <p>Si estrae una lettera a caso.</p>
+            <div id="scompare4">
+              <p>La squadra deve scrivere più FIORI e PIANTE possibile che COMINCIANO con quella lettera (in italiano).</p>
+              <p>Avete un minuto di tempo per poterli scrivere.</p>
+            </div>
+            <p>Vince 5 punti ogni squadra che ne scrive ALMENO DUE.</p>
+            <p>Il gioco si svolge in 6 round</p>
+            <button id="start-button4" onclick="startRoundGame4()">Genera Lettera</button>
+            <div id="random-letter-display" style="margin-top: 20px;"></div>
+          </div>
+        </div>
+
+        <script>
+        function startRoundGame4() {
+          const letterDisplay = document.getElementById('random-letter-display');
+          const alphabet = 'ABCDEFGILMOPRSTV'; // Lettere da scegliere
+          let interval;
+
+          // Funzione per generare una lettera casuale
+          function getRandomLetter() {
+            return alphabet[Math.max(0,Math.floor(Math.random() * alphabet.length))];
+          }
+
+          // Lettera finale da raggiungere
+          const finalLetter = getRandomLetter();
+
+          // Funzione per mostrare le lettere
+          function showRandomLetters() {
+            const currentLetter = getRandomLetter();
+            letterDisplay.textContent = currentLetter;
+
+            letterDisplay.style.fontSize = '15rem'; // Ingrandisce il font
+            letterDisplay.style.color = 'black';
+            letterDisplay.style.background = 'white';
+            letterDisplay.style.border = '1px solid black';
+
+            // Controlla se la lettera corrente è uguale alla lettera finale
+            if (currentLetter === finalLetter) {
+              clearInterval(interval); // Ferma l'intervallo
+              //setTimeout(() => {
+                //alert(`La lettera estratta è: ${finalLetter}`);
+              //}, 500);
+              speak(`Lettera, ${finalLetter}`);
+            }
+          }
+
+          // Avvia l'animazione delle lettere
+          interval = setInterval(showRandomLetters, 100); // Cambia lettera ogni 100ms
+        }
+
+        function speak(message) {
+          const utterance = new SpeechSynthesisUtterance(message);
+          utterance.lang = 'it-IT'; // Imposta la lingua italiana
+          window.speechSynthesis.speak(utterance);
+        }
+        </script>
+
+        <div class="screen" id="screen-5">
+          <div class="game-container">
+            <h3>GIOCO 5 : MEMORY</h3>
+            <p>Sai giocare a Memory?</p>
+            <p>Ogni squadra prende tanti punti quante sono le caselle del memory che vengono estratte.</p>
+            <p>Il gioco prevede 3 partite.</p>
+            <p>Il mazzo di tessere sarà mescolato da chi vince il round precedente ad eccezione del primo.</p>
+          </div>
+        </div>
+
+    </div>
+
+    <script>
+      let maximumWritingTime=60;
+      function showScreen(screenNumber) {
+        const screens = document.querySelectorAll('.screen');
+        screens.forEach((screen, index) => {
+            if (index === screenNumber - 1) {
+                screen.classList.add('active');
+            } else {
+                screen.classList.remove('active');
+            }
+        });
+        flowerImageHomePage.style.display = "none";
+        flowerNameHomePage.style.display = "none";
+
+        maximumWritingTime
+      }
+
+    </script>
+</body>
+</html>
+<!-- passiflora, peonia, -->
